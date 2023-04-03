@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase.config'
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false)
@@ -35,6 +36,12 @@ const SignUp = () => {
             updateProfile(auth.currentUser, {
                 displayName: name
             })
+
+            const fromDataCopy = { ...formData }
+            delete fromDataCopy.password
+            fromDataCopy.timestamp = serverTimestamp()
+
+            await setDoc(doc(db, 'users', user.uid), fromDataCopy)
 
             navigate('/ ')
         } catch (error) {
