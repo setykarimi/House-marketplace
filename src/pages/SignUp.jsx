@@ -6,6 +6,7 @@ import visibilityIcon from '../assets/svg/visibilityIcon.svg';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase.config'
+import OAuth from '../components/OAuth';
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false)
@@ -47,7 +48,7 @@ const SignUp = () => {
 
             navigate('/ ')
         } catch (error) {
-          toast.error('Something went wrong with registration')
+            toast.error('Something went wrong with registration')
         }
     }
 
@@ -116,6 +117,7 @@ const SignUp = () => {
                         Sign In Instead
                     </Link>
                 </main>
+                <OAuth />
             </div>
         </>
     );
